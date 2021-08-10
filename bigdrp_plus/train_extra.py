@@ -1,5 +1,5 @@
 from utils.data_initializer import initialize
-from utils.utils import mkdir, reindex_tuples, create_fold_mask
+from utils.utils import mkdir, reindex_tuples, create_fold_mask, reset_seed
 from utils.tuple_dataset import TupleMapDataset
 import torch
 from torch.utils.data import DataLoader, TensorDataset
@@ -85,7 +85,7 @@ def train_extra_and_test(FLAGS, cell_lines, labels, label_matrix, normalizer):
         train_data = DataLoader(train_data, batch_size=128)
 
         print("Loading weights from: %s..."%model_path)
-        model = ModelHead(cell_lines.shape[1], hyperparams)
+        model = DRPPlus(cell_lines.shape[1], hyperparams)
         model.load_state_dict(torch.load(model_path), strict=False)
         model = model.to(device)
 

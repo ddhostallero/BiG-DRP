@@ -7,7 +7,7 @@ from dgl.nn.pytorch import HeteroGraphConv, GraphConv
 
 class DRPPlus(nn.Module):
     def __init__(self, n_genes, hyp):
-        super(ModelHead, self).__init__()
+        super(DRPPlus, self).__init__()
 
         self.expr_l1 = nn.Linear(n_genes, hyp['expr_enc'])
         self.mid = nn.Linear(hyp['expr_enc'] + hyp['conv2'], hyp['mid'])
