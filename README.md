@@ -23,3 +23,7 @@ python main.py --mode=extra --weight_folder=big --folder=big_plus
 - `--seed`: the seed number for 5-fold CV (default: 0)
 - `--drug_feat`: type of drug feature (`desc`, `morgan`, or `mixed`, default: `desc`)
 - `--network_perc`: percentile used for the bipartite graph threshold (default: 1)
+
+## Data Availability
+
+Preprocessed data can be accessed here: https://bit.ly/3yHTyCX
