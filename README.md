@@ -15,8 +15,8 @@ python main.py --mode=extra --weight_folder=big --folder=big_plus
 ## Additional Parameters
 
 - `--split`: the type of data-splitting to use (`lco` or `lpo`, default: `lco`)
-- `--dataroot`: the root directory of your data (file names for input files can me modified in `constants.py`) (default: `./data/`)
-- `--outroot`: the root directory of your outputs (default: `./results/`)
+- `--dataroot`: the root directory of your data (file names for input files can me modified in `utils/constants.py`) (default: `../`)
+- `--outroot`: the root directory of your outputs (default: `./`)
 - `--folder`: subdirectory you want to save your outputs (optional)
 - `--weight_folder`: subdirectory for the saved weights and encodings (for BiG-DRP+ only)
 - `--mode`: `train` means BiG-DRP, `extra` means BiG-DRP+ (default: `train`)

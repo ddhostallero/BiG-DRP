@@ -2,6 +2,7 @@ from utils.utils import mkdir, reset_seed
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
+import utils.constants as c
 
 def standardize(train_x, test_x):
     ss = StandardScaler()
@@ -15,19 +16,19 @@ def initialize(FLAGS, binary=False, multitask=False):
     reset_seed(FLAGS.seed)
     mkdir(FLAGS.outroot + "/results/" + FLAGS.folder)
 
-    LABEL_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/drug_response/gdsc_tuple_labels_folds.csv'    
-    GENE_EXPRESSION_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/sanger_tcga/sanger_fpkm.csv'
-    LABEL_MATRIX_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/drug_response/gdsc_ln_ic50_cleaned.csv'
+    LABEL_FILE = FLAGS.dataroot + c._LABEL_FILE    
+    GENE_EXPRESSION_FILE = FLAGS.dataroot + c._GENE_EXPRESSION_FILE
+    LABEL_MATRIX_FILE = FLAGS.dataroot + c._LABEL_MATRIX_FILE
 
     if FLAGS.drug_feat == 'desc' or FLAGS.drug_feat == 'mixed':
-        DRUG_FEATURE_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/drug_features/gdsc_250_drug_descriptors.csv'
+        DRUG_FEATURE_FILE = FLAGS.dataroot + c._DRUG_DESCRIPTOR_FILE
         drug_feats = pd.read_csv(DRUG_FEATURE_FILE, index_col=0)
 
         df = StandardScaler().fit_transform(drug_feats.values) # normalize
         drug_feats = pd.DataFrame(df, index=drug_feats.index, columns=drug_feats.columns)
 
         if FLAGS.drug_feat == 'mixed':
-            DRUG_MFP_FEATURE_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/drug_features/gdsc_250_morgan.csv'
+            DRUG_MFP_FEATURE_FILE = FLAGS.dataroot + c._MORGAN_FP_FILE
             drug_mfp = pd.read_csv(DRUG_MFP_FEATURE_FILE, index_col=0)
             drug_feats[drug_mfp.columns] = drug_mfp
 
@@ -35,7 +36,7 @@ def initialize(FLAGS, binary=False, multitask=False):
         drug_feats = drug_feats[valid_cols]
         
     else:
-        DRUG_FEATURE_FILE = FLAGS.dataroot + '/drp-data/grl-preprocessed/drug_features/gdsc_250_morgan.csv'
+        DRUG_FEATURE_FILE = FLAGS.dataroot + c._MORGAN_FP_FILE
         drug_feats = pd.read_csv(DRUG_FEATURE_FILE, index_col=0)
 
 
