@@ -6,7 +6,7 @@ import numpy as np
 from scipy.stats import pearsonr, spearmanr
 from collections import deque
 import json
-from dgl.dataloading.neighbor import MultiLayerFullNeighborSampler
+from dgl.dataloading import MultiLayerFullNeighborSampler
 import torch.nn.functional as F
 
 class Trainer:
@@ -32,7 +32,8 @@ class Trainer:
             graph_sampler = MultiLayerFullNeighborSampler(2)
             print(self.cell_feats.shape)
             self.network.ndata['features'] = {'drug': self.drug_feats, 'cell_line': self.cell_feats}
-            self.blocks = [b.to(self.device) for b in graph_sampler.sample_blocks(self.network, {'drug': range(len(drug_feats))})]
+            _,_, blocks = graph_sampler.sample_blocks(self.network, {'drug': range(len(drug_feats))})
+            self.blocks = [b.to(self.device) for b in blocks]
            
             #make sure they are aligned correctly
             self.cell_feats = self.blocks[0].ndata['features']['cell_line'].to(self.device)

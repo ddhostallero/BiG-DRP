@@ -85,7 +85,8 @@ class BiGDRP(nn.Module):
         h1 = {k: F.leaky_relu(v + self.alpha*node_features[k]) for k, v in h1.items()}
 
         h2 = self.conv2(blocks[1], h1)
-        h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
+        h2['drug'] = F.leaky_relu(h2['drug'] + self.alpha*h1['drug'])
+        # h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
         
         expr_enc = F.leaky_relu(self.expr_l1(cell_features))        
         drug_enc = h2['drug'][drug_index]
@@ -107,7 +108,8 @@ class BiGDRP(nn.Module):
         h1 = {k: F.leaky_relu(v + self.alpha*node_features[k]) for k, v in h1.items()}
         
         h2 = self.conv2(blocks[1], h1)
-        h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
+        h2['drug'] = F.leaky_relu(h2['drug'] + self.alpha*h1['drug'])
+        # h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
         
         expr_enc = F.leaky_relu(self.expr_l1(cell_features))
         expr_enc = expr_enc.unsqueeze(1) # (batch, 1, expr_enc_size)
@@ -134,7 +136,8 @@ class BiGDRP(nn.Module):
         h1 = {k: F.leaky_relu(v + self.alpha*node_features[k]) for k, v in h1.items()}
         
         h2 = self.conv2(blocks[1], h1)
-        h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
+        h2['drug'] = F.leaky_relu(h2['drug'] + self.alpha*h1['drug'])
+        # h2 = {k: F.leaky_relu(v + self.alpha*h1[k]) for k, v in h2.items()}
         
         drug_enc = h2['drug']
         return drug_enc

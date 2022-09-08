@@ -11,9 +11,9 @@ def create_network(tuples, percentile=1):
     for drug in tuples['drug'].unique():
         drug_edges = tuples.loc[tuples['drug']==drug]        
         thresh = np.percentile(drug_edges['response'], percentile)
-        sen_edges = sen_edges.append(drug_edges.loc[drug_edges['response']<thresh])
+        sen_edges = pd.concat([sen_edges, drug_edges.loc[drug_edges['response']<thresh]])
         thresh = np.percentile(drug_edges['response'], (100-percentile))
-        res_edges = res_edges.append(drug_edges.loc[drug_edges['response']>thresh])
+        res_edges = pd.concat([res_edges, drug_edges.loc[drug_edges['response']>thresh]])
 
     print("generated a network with %d sensitive edges and %d resistant edges "%(len(sen_edges), len(res_edges)))
 

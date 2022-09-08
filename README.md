@@ -1,5 +1,15 @@
 # BiG-DRP: Bipartite Graph-based Drug Response Predictor
 
+Implementation of Bipartite Graph-represented Drug Response Predictor (BiG-DRP and BiG-DRP+) as described in:
+
+>David Earl Hostallero, Yihui Li, Amin Emad, Looking at the BiG picture: incorporating bipartite graphs in drug response prediction, Bioinformatics, Volume 38, Issue 14, 15 July 2022, Pages 3609–3620, https://doi.org/10.1093/bioinformatics/btac383
+
+## Dependencies
+This repository has been tested on python 3.7. To install the dependencies run the following on the terminal
+```
+pip install -r requirements.txt
+```
+
 ## Running BiG-DRP
 ```
 python main.py
@@ -25,5 +35,18 @@ python main.py --mode=extra --weight_folder=big --folder=big_plus
 - `--network_perc`: percentile used for the bipartite graph threshold (default: 1)
 
 ## Data Availability
+Preprocessed data can be accessed here: https://dx.doi.org/10.6084/m9.figshare.20022947
 
-Preprocessed data can be accessed here: https://bit.ly/3yHTyCX
+## BibTex Citation
+```
+@article{hostallero2022looking,
+  title={Looking at the BiG picture: incorporating bipartite graphs in drug response prediction},
+  author={Hostallero, David Earl and Li, Yihui and Emad, Amin},
+  journal={Bioinformatics},
+  volume={38},
+  number={14},
+  pages={3609--3620},
+  year={2022},
+  publisher={Oxford University Press}
+}
+```
