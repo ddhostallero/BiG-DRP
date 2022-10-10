@@ -37,6 +37,13 @@ python main.py --mode=extra --weight_folder=big --folder=big_plus
 ## Data Availability
 Preprocessed data can be accessed here: https://dx.doi.org/10.6084/m9.figshare.20022947
 
+## Performance Metrics
+Note that when you run ``main.py``, the output performance metrics do not correspond to the ones we presented in the paper because ``main.py`` only shows the overall performance (i.e. performance for all (drug, CCL) pairs in the test set is calculated as a whole). In the paper, we calculated the performance **per drug then averaged the per-drug performances**. To run the per-drug calculation, use ``metrics/calculate_metrics.py``. Example:
+
+```
+python metrics/calculate_metrics.py --folder=results/big_plus/ --outfolder=results/big_plus
+```
+
 ## BibTex Citation
 ```
 @article{hostallero2022looking,

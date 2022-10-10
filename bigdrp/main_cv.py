@@ -243,3 +243,4 @@ def main(FLAGS):
     print("Pearson: %f"%test_metrics[2])
     print("Spearman: %f"%test_metrics[3])
     print("Note: This is not the per-drug performance that is reported in the paper")
+    print("To obtain per-drug performance, use metrics/calculate_metrics.py")
