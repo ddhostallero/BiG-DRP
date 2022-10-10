@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 
 def fold_validation(hyperparams, seed, network, train_data, val_data, cell_lines, 
-    drug_feats, tuning, epoch, final=False):
+    drug_feats, tuning, epoch, maxout=False):
 
     r"""
 
@@ -42,8 +42,8 @@ def fold_validation(hyperparams, seed, network, train_data, val_data, cell_lines
     epoch : int
         Used as a maximum number of training epochs if ``final`` is False. 
         Otherwise, used as the fixed number of  trainingepochs.
-    final : bool, optional
-        If True, uses the ``epoch`` parameter as a fixed epoch instead of maximum epoch. 
+    maxout : bool, optional
+        If True, maxes out the ``epoch`` parameter as a fixed epoch. 
         Otherwise, uses an early stopping criterion. Default: ``False``.
     """
 
@@ -59,11 +59,10 @@ def fold_validation(hyperparams, seed, network, train_data, val_data, cell_lines
             num_epoch=epoch, 
             train_loader=train_loader, 
             val_loader=val_loader,
-            tuning=tuning)
-    if final:
-        return val_error, trainer, metric_names
-    else:
-        return val_error, None, metric_names
+            tuning=tuning,
+            maxout=maxout)
+
+    return val_error, trainer, metric_names
 
 def create_dataset(tuples, train_x, val_x, 
     train_y, val_y, train_mask, val_mask, drug_feats, percentile):
@@ -166,7 +165,7 @@ def nested_cross_validation(FLAGS, drug_feats, cell_lines, labels, label_matrix,
 
         val_error,_,_ = fold_validation(hp, FLAGS.seed, network, train_data, 
             val_data, cl_tensor, df_tensor, tuning=False, 
-            epoch=hp['num_epoch'], final=False)
+            epoch=hp['num_epoch'], maxout=False)
 
         average_over = 3
         mov_av = moving_average(val_error[:,0], average_over)
@@ -202,7 +201,7 @@ def nested_cross_validation(FLAGS, drug_feats, cell_lines, labels, label_matrix,
 
         test_error, trainer, metric_names = fold_validation(hp, FLAGS.seed, network, train_data, 
             test_data, cl_tensor, df_tensor, tuning=False, 
-            epoch=hp['num_epoch'], final=True) # set final so that the trainer uses all epochs
+            epoch=hp['num_epoch'], maxout=True) # set maxout so that the trainer uses all epochs
 
         if i == 0:
             final_metrics = np.zeros((5, test_error.shape[1]))
@@ -243,3 +242,4 @@ def main(FLAGS):
     print("R2: %f"%test_metrics[1])
     print("Pearson: %f"%test_metrics[2])
     print("Spearman: %f"%test_metrics[3])
+    print("Note: This is not the per-drug performance that is reported in the paper")

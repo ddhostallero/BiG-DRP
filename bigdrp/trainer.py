@@ -117,7 +117,7 @@ class Trainer:
         return preds
 
 
-    def fit(self, num_epoch, train_loader, val_loader, tuning=False, final=False):
+    def fit(self, num_epoch, train_loader, val_loader, tuning=False, maxout=False):
         start_time = time.time()
 
         ret_matrix = np.zeros((num_epoch, 6))
