@@ -151,7 +151,7 @@ class Trainer:
             else:
                 count += 1
 
-            if count == 10 and not final:
+            if count == 10 and not maxout:
                 ret_matrix = ret_matrix[:epoch+1]
                 break
 
