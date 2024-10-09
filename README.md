@@ -44,6 +44,8 @@ Note that when you run ``main.py``, the output performance metrics do not corres
 python metrics/calculate_metrics.py --folder=results/big_plus/ --outfolder=results/big_plus
 ```
 
+ **Note:** The corresponding article to this repository reports the *effective* RMSE. By default, our method z-scores the lnIC50 per drug prior to training. However, since we are interested in predicting the actual lnIC50, we have to scale the predictions back to `scaled_prediction = prediction*drug_stdev + drug_mean`.  The effective RMSE is calculated using the (raw) lnIC50s and the scaled predictions. The code in this repository calculates the RMSE using the z-scored lnIC50s and the (raw) predictions.
+
 ## BibTex Citation
 ```
 @article{hostallero2022looking,
